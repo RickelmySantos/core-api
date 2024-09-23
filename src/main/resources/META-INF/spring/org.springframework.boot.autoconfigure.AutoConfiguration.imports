@@ -1,0 +1,3 @@
+com.br.core.configuracoes.CoreAutoConfig
+com.br.core.configuracoes.JPAAutoConfig
+com.br.core.configuracoes.FlywayAutoConfig
