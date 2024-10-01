@@ -47,6 +47,7 @@ public interface QueryRestApi<E extends EntidadeBase, S extends QueryService<E, 
     return entidadeDto;
   }
 
+  @GetMapping(produces = {"application/json"})
   default ResponseEntity<Page<D>> listar(Pageable pageable) {
     final Page<E> entidades = this.getService().listar(pageable);
 
