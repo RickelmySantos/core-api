@@ -2,19 +2,19 @@ package com.br.core.configuracoes;
 
 import jakarta.annotation.PostConstruct;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-@Configuration
+@AutoConfiguration
 @Log4j2
 public class CorsConfig implements WebMvcConfigurer {
 
 
   @PostConstruct
   public void init() {
-    CorsConfig.log.info("LOADED >>>> WebAutoConfig");
+    CorsConfig.log.info("LOADED >>>> CorsConfig");
   }
 
   @Bean
@@ -22,13 +22,9 @@ public class CorsConfig implements WebMvcConfigurer {
     return new WebMvcConfigurer() {
       @Override
       public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedOriginPatterns("*")
-            .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD", "TRACE", "CONNECT")
+        registry.addMapping("/**").allowedOriginPatterns("*").allowedMethods("*")
             .allowedHeaders("*").allowCredentials(true);
       }
     };
   }
-
-
-
 }

@@ -1,4 +1,6 @@
 com.br.core.configuracoes.CoreAutoConfig
-com.br.core.configuracoes.JPAAutoConfig
-com.br.core.configuracoes.FlywayAutoConfig
 com.br.core.configuracoes.CorsConfig
+com.br.core.configuracoes.FlywayAutoConfig
+com.br.core.configuracoes.JPAAutoConfig
+com.br.core.configuracoes.SwaggerConfig
+com.br.core.configuracoes.WebSecurityConfig

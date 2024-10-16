@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @AutoConfiguration
 @EnableJpaAuditing
 @ConditionalOnProperty("spring.datasource.url")
-
 @Log4j2
 public class JPAAutoConfig {
 
