@@ -2,9 +2,8 @@ package com.br.core.configuracoes;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -19,12 +18,12 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 @AutoConfiguration
 @EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true)
-@Slf4j
+@Log4j2
 public class WebSecurityConfig {
 
   @PostConstruct
   public void init() {
-    WebSecurityConfig.log.debug("LOADED >>>>> WebSecurityConfig");
+    WebSecurityConfig.log.info("LOADED >>>>> WebSecurityConfig");
   }
 
   @Bean
@@ -32,12 +31,12 @@ public class WebSecurityConfig {
     return new MvcRequestMatcher.Builder(introspector);
   }
 
-  @ConditionalOnMissingBean
+  // @ConditionalOnMissingBean
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc)
       throws Exception {
 
-    WebSecurityConfig.log.debug("LOADED >>>>> SecurityFilterChain");
+    WebSecurityConfig.log.info("LOADED >>>>> SecurityFilterChain");
     http.csrf(csrf -> csrf.disable());
     http.cors(cors -> Customizer.withDefaults());
     http.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()));
@@ -46,8 +45,10 @@ public class WebSecurityConfig {
       authorizeRequests.requestMatchers(mvc.pattern("/v3/api-docs")).permitAll()
           .requestMatchers(mvc.pattern("/swagger-resources/**")).permitAll()
           .requestMatchers(mvc.pattern("/swagger-ui/**")).permitAll()
-          .requestMatchers(mvc.pattern("/swagger-ui/index.html**")).permitAll().anyRequest()
-          .authenticated();
+          .requestMatchers(mvc.pattern("/swagger-ui/index.html**")).permitAll()
+          .requestMatchers(mvc.pattern("/actuator/health")).permitAll()
+          // APP
+          .anyRequest().authenticated();
     });
     http.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> Customizer.withDefaults()));
     http.sessionManagement(

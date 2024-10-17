@@ -6,7 +6,7 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.servers.Server;
 import jakarta.annotation.PostConstruct;
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Bean;
 
 @AutoConfiguration
 @ConditionalOnProperty("openapi.title")
-@Slf4j
+@Log4j2
 public class SwaggerConfig {
 
   @Value("${openapi.title}")
@@ -35,7 +35,7 @@ public class SwaggerConfig {
   @Value("${openapi.contact.email}")
   private String apiContactEmail;
 
-  @Value("${app.base-url:https://default.example.com}")
+  @Value("${app.base-url:http://localhost:8080}")
   private String serverUrl;
 
   @Value("${server.servlet.context-path}")
@@ -43,7 +43,7 @@ public class SwaggerConfig {
 
   @PostConstruct
   public void init() {
-    SwaggerConfig.log.debug("LOADED >>>>> SwaggerConfig");
+    SwaggerConfig.log.info("LOADED >>>>> SwaggerConfig");
   }
 
   @Bean
